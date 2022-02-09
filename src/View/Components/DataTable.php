@@ -7,10 +7,12 @@ use Illuminate\View\Component;
 class DataTable extends Component
 {
     public $columns;
+    public $paginator;
 
-    public function __construct($columns = [])
+    public function __construct($paginator, $columns = [])
     {
         $this->columns = $columns;
+        $this->paginator = $paginator;
     }
 
     public function render()
