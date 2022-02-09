@@ -3,8 +3,10 @@
 namespace Veldman\DataTable;
 
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Str;
 use Veldman\DataTable\View\Components\DataTable;
 
 class DataTableServiceProvider extends ServiceProvider
