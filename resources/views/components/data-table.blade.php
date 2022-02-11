@@ -6,9 +6,17 @@
     <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
         <table class="min-w-full divide-y divide-gray-200">
             <thead class="bg-gray-50">
-                <tr>
-                    {{ $columns }}
-                </tr>
+                @if(is_array($columns))
+                    @foreach($columns as $column)
+                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            {{ __($column) }}
+                        </th>
+                    @endforeach
+                @else
+                    <tr>
+                        {{ $columns }}
+                    </tr>
+                @endif
             </thead>
             <tbody class="bg-white divide-y divide-gray-200">
                 {{ $slot }}
