@@ -7,6 +7,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
+use Veldman\DataTable\View\Components\Column;
 use Veldman\DataTable\View\Components\DataTable;
 
 class DataTableServiceProvider extends ServiceProvider
@@ -21,7 +22,7 @@ class DataTableServiceProvider extends ServiceProvider
         $this->loadViewsFrom(__DIR__.'/../resources/views', 'data-table');
 
         Blade::component('data-table', DataTable::class);
-
+        Blade::component('dcolumn', Column::class);
 
         \Illuminate\Database\Eloquent\Builder::macro('order', function (array $columns) {
             $order = request()->get('order', null);
@@ -39,12 +40,25 @@ class DataTableServiceProvider extends ServiceProvider
             // TODO: Check if asc or desc
 
             foreach ($columns as $column) {
-                if (is_array($column)) {
-                    if ($column[0] != $order) {
+                if (Str::contains($column, '.')) {
+                    if ($column != $order) {
                         continue;
                     }
 
-                    $q = $column[0]::select($column[1])->whereColumn($column[2], $column[3]);
+                    $parts = explode('.', $column);
+                    $relationColumn = array_pop($parts);
+                    $relationName = join('.', $parts);
+
+                    $inputs = [
+                        get_class($this->model->$relationName()->getRelated()),
+                        $relationColumn,
+                        $this->model->$relationName()->getQualifiedForeignKeyName(),
+                        $this->model->$relationName()->getQualifiedOwnerKeyName()
+                    ];
+
+                    // dd($inputs, ['App\Models\Customer', 'name', 'projects.customer_id', 'customers.id']);
+
+                    $q = $inputs[0]::select($inputs[1])->whereColumn($inputs[2], $inputs[3]);
 
                     $this->query->orderBy($q, $direction);
                 } else {
