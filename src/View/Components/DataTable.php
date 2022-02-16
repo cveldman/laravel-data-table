@@ -6,13 +6,15 @@ use Illuminate\View\Component;
 
 class DataTable extends Component
 {
-    public $columns;
-    public $paginator;
+    public $datatable;
 
-    public function __construct($paginator, $columns = [])
+    public $columns;
+
+    public function __construct($datatable, $columns = [])
     {
+        $this->datatable = $datatable;
+
         $this->columns = $columns;
-        $this->paginator = $paginator;
     }
 
     public function render()

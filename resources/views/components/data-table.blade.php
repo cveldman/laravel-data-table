@@ -25,6 +25,6 @@
     </div>
 
     <div class="mt-4">
-        {{ $paginator->appends(request()->all())->links() }}
+        {{ $datatable->appends(request()->all())->links() }}
     </div>
 </div>

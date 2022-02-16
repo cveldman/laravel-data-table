@@ -234,5 +234,14 @@ class DataTableServiceProvider extends ServiceProvider
 
             return $this;
         });
+
+        \Illuminate\Database\Eloquent\Builder::macro('datatable', function (array $columns) {
+
+            $this->order($columns);
+
+            $this->search($columns);
+
+            return $this->paginate(5);
+        });
     }
 }
