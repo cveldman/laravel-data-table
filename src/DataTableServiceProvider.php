@@ -118,7 +118,7 @@ class DataTableServiceProvider extends ServiceProvider
                 session(['perPage' => request()->query('perPage')]);
             }
 
-            return $this->paginate(session()->query('perPage', 15));
+            return $this->paginate(session()->get('perPage', 15));
         });
     }
 }
