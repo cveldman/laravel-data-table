@@ -3,7 +3,8 @@
         @include('data-table::search')
     </div>
 
-    <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+    <!-- <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg"> -->
+    <div class="shadow overflow-x-auto border-b border-gray-200 sm:rounded-lg">
         <table class="min-w-full divide-y divide-gray-200">
             <thead class="bg-gray-50">
                 @if(is_array($columns))
